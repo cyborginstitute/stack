@@ -1,0 +1,65 @@
+SOURCE_STUMP_CONFIG = ~/garen/stumpwm
+HOSTNAME := $(shell hostname -s)
+BUILDDIR = ../build
+CURRENT := $(shell git rev-parse HEAD)
+
+STUMPDIR = stumpwm-config
+
+.PHONY: import install help package clean clean-package clean-build configure install force
+
+.DEFAULTGOAL = help
+
+help:
+	@echo "StumpWM Configuration Builder"
+	@echo "	  install	  -- installs a configured distribution."
+	@echo "	  configure	  -- configures the package in perperation for installtion."
+	@echo "	  "
+	@echo "Internal targets (for building the distribution:)"
+	@echo "	  import	  -- copies and munges tychoish's current configuration"
+	@echo "	  package	  -- builds the tarball from the current state of the repo."
+	@echo "	  clean-build	  -- removes temp files from the build directory."
+	@echo "	  clean-packages  -- removes package files from the build directory."
+
+-include makefile.user
+
+######################################################################
+#
+# Packaging targets for building StumpWM config packages. Internal.
+#
+######################################################################
+
+import:
+	@echo "This target builds a tarball from tychoish's current stumpwm"
+	@echo "configuration. Unknown results for other users when using"
+	@echo "this target."
+	@echo ""
+	rm -rf $(STUMPDIR)
+	mkdir $(STUMPDIR)/
+	cp -R $(SOURCE_STUMP_CONFIG)/* $(STUMPDIR)
+	rm -rf $(STUMPDIR)/config/archive/ $(STUMPDIR)/layout/* $(STUMPDIR)/archive
+	for i in `find $(STUMPDIR) -name "*.lisp"`; do sed -i -r -e "s@/home/tychoish/garen@~@g" -e "s@/home/tychoish@~@g" -e "s@xgen@work@g" -e "s@foucault@remote@g" -e "s@vpn@example.net@g" -e "s/tychoish@/whoami@/" $$i; done
+	cp $(STUMPDIR)/config/arendt.lisp $(STUMPDIR)/config/hostname.template
+	sed -i -r -e "s/arendt/HOSTNAME/g" -e "s/^(\(run-commands)(.*)$$/\;\; \1\2/g" $(STUMPDIR)/config/hostname.template
+	echo -e "\n\n ;; TODO once you have a default desktop layout that you want to us\n ;; saved, amend uncomment the following line:" >> $(STUMPDIR)/config/hostname.template
+	rm -rf $(STUMPDIR)/notifications.lisp $(STUMPDIR)/wifi.lisp $(STUMPDIR)/window-tags.lisp $(STUMPDIR)/undocumented.lisp $(STUMPDIR)/colors-wombat.lisp $(STUMPDIR)/app-menu.lisp $(STUMPDIR)/mem.lisp $(STUMPDIR)/battery.lisp
+	sed -i -r -e 's/(\(load-module "mpd"\))/;; \1/g' -e 's/(\(load-module "battery-portable"\))/;; \1/g' $(STUMPDIR)/tycho-settings.lisp
+	sed -i -e "s/--server-file=tychoish/-a emacs/" -e "s/--server-file=work/-a emacs/" -e "s/ping tychoish.com/ping 8.8.8.8/" $(STUMPDIR)/tycho-system.lisp
+
+package:
+	mkdir -p $(BUILDDIR)/stumpwm-config/stumpwm/
+	cp -R stumpwm-config/* $(BUILDDIR)/stumpwm-config/stumpwm
+	# cp docs/stuwmpwm-readme.rst $(BUILDDIR)/stumpwm-config/README
+	# cp COPYING $(BUILDDIR)/stumpwm-config/
+	cp makefile.user $(BUILDDIR)/stumpwm-config/makefile
+	tar -C $(BUILDDIR) -czvf stumpwm-config-$(CURRENT).tar.gz stumpwm-config/
+
+######################################################################
+#
+# Cleanup releated targets for removing files
+#
+######################################################################
+
+clean-packages:
+	rm -rf $(BUILDDIR)/*.tar.gz
+clean-build:
+	rm -rf $(BUILDDIR)/stumpwm-config/

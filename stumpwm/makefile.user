@@ -1,0 +1,46 @@
+HOSTNAME := $(shell hostname -s)
+
+.PHONY: install configure help
+.DEFAULTGOAL = configure
+
+all: configure install
+
+-help:
+	@echo "help crap"
+
+configure:
+	@echo "For Arch Linux users, you shuold ensure that the following"
+	@echo "packages are installed on your system. Some must be"
+	@echo "installed from the AUR:"
+	@echo "	  sbcl"
+	@echo "	  clx (AUR)"
+	@echo "	  cl-ppcre (AUR)"
+	@echo "	  stumpwm-git (AUR)"
+	@echo "	  slime-cvs"
+	@echo "	  emacs (recommended)"
+	@echo "	  feh (optional)"
+	@echo "	  rxvt-unicode"
+	@echo "	  urxvtcd (AUR)"
+	@echo ""
+	@echo "Users of other distributions will need to install dependecies"
+	@echo "using other methods."
+	@echo ""
+	cp stumpwm/config/hostname.template stumpwm/config/$(HOSTNAME).lisp
+	sed -i "s/HOSTNAME/"$(HOSTNAME)"/g" stumpwm/config/$(HOSTNAME).lisp
+	sed -i "s/whoami/"`whoami`"/g" stumpwm/config/tycho-system.lisp
+	@echo ""
+	@echo "Edit the tycho-system.lisp to configure emacsclient and remote"
+	@echo "hosts, as well as the tycho-keybindings.lisp as needed."
+	@echo ""
+	@echo "Run 'make install' if you didn't run 'make all' to install this "
+	@echo "configuraiton."
+
+install: configure
+	cp -R stumpwm/ ~/
+	-mv -f ~/.stumpwmrc ~/stumpwmrc-`date +%s`
+	ln -s ~/stumpwm/config/$(HOSTNAME).lisp ~/.stumpwmrc
+
+clean:
+	rm ~/.stumpwmrc
+	@echo "install your previous .stumpwmrc or restart for the default"
+	@echo "configuraiton"

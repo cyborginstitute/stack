@@ -1,0 +1,44 @@
+HOSTNAME := $(shell hostname -s)
+SOURCES := $(shell find $(SOURCE) \( -name "*.el" \) | grep -v -e "tycho-\|w3m\|ljupdate\|muse\|config/")
+#| grep -v "w3m" | grep -v "ljupdate" | grep -v "muse" | grep -v "config/")
+
+OUTPUTS := $(subst .el,.elc,$(SOURCES))
+
+.PHONY: install configure help
+.DEFAULTGOAL = configure
+
+all:
+
+-help:
+	@echo "help crap"
+
+configure: byte-compile
+	@echo "For Arch Linux users, you shuold run with emacs 23 or 24. You may also need to install"
+	@echo "packages for acutex and slime-cvs. emacs-w3m is included in this distribution."
+	@echo ""
+	cp emacs/config/hostname.template emacs/config/$(HOSTNAME).el
+	@echo ""
+	@echo "Run 'make install' if you didn't run 'make all' to install this "
+	@echo "configuraiton."
+
+test:
+	@echo $(SOURCES)
+	@echo
+	@echo $(SOURCES_TEST)
+
+byte-compile:$(OUTPUTS)
+
+%.elc:%.el
+	emacs -batch -q -no-site-file -L emacs/ -eval "(setq byte-compile-dynamic t) (require 'cl)" -f batch-byte-compile $<
+
+install: configure
+	cp -R emacs/ ~/
+	-mv -f ~/.emacs ~/emacs-`date +%s`
+	ln -s ~/emacs/config/$(HOSTNAME).el ~/.emacs
+
+clean:
+	-mv -f ~/.emacs ~/emacs-`date +%s`
+	-rm -f ~/emacs/*.elc
+	-rm -f emacs/*.elc
+	@echo "install your previous .emacs or restart for the default"
+	@echo "configuraiton"
