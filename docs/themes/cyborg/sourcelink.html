@@ -1,0 +1,67 @@
+
+{#
+    basic/sourcelink.html
+    ~~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx sidebar template: "show source" link.
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}
+{%- if show_source and has_source and sourcename %}
+  <h3>{{ _('This Page') }}</h3>
+  <ul class="this-page-menu">
+    <li><a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+           rel="nofollow">{{ _('Page Source') }}</a></li>
+    <li><a href="http://git.cyborginstitute.net/?p=taskfile.git">git repository</a>(cyborg institute)</li>
+    <li><a href="http://github.com/cyborg-institute/taskfile">git repository</a> (github)</li>
+    <li><a href="http://github.com/cyborg-institute/taskfile/issues">open issues</a> (github)</li>
+    <li><a href="http://github.com/cyborg-institute/taskfile/issues/net">create issue</a> (github)</li>
+  </ul>
+{%- endif %}
+
+<h3>About</h3>
+
+<h4>Cyborg Institute</h4>
+
+<p>
+  The Cyborg Institute is a collective free software/open source
+  publishing, consulting, and services umbrella. The Institute
+  supports individuals working on projects that address technological
+  issues from a cyborg perspective.
+</p>
+
+<ul class="this-page-menu">
+  <li><a href="http://cyborginstitute.com">Cyborg Institute</a></li>
+  <li><a href="http://cyborginstitute.com/projects">Projects</a></li>
+  <li><a href="http://cyborginstitute.com/contact">Contact</a></li>
+</ul>
+
+<h4>tychoish</h4>
+
+<p>
+  tychoish is a wiki and blog maintained by tycho garen (Sam
+  Kleinman,) that supports and discusses these projects. See <a
+  href="http://tychoish.com/">tychoish.com</a> for more up to date
+  information about Cyborg Institute projects and updates.
+</p>
+
+<ul class="this-page-menu">
+  <li><a href="http://tychoish.com">tychoish</a></li>
+  <li><a href="http://tychoishf.com/rhizome/">rhizome (blog)</a></li>
+  <li><a href="http://tychoishf.com/index.rss/">rss feed</a></li>
+</ul>
+
+
+<h4>Critical Futures</h4>
+
+<p>
+  Critical Futures is a sibling project to the Institute focusing on
+  science fiction, publishing, and writing.
+</p>
+
+<ul class="this-page-menu">
+  <li><a href="http://criticalfutures.com">Critical Futures</a></li>
+  <li><a href="http://criticalfutures.com/projects">Projects</a></li>
+  <li><a href="http://criticalfutures.com/contact">Contact</a></li>
+</ul>
