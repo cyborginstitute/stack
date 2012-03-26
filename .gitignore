@@ -5,3 +5,4 @@
 .svn*
 .#*
 build*
+*.tar.gz

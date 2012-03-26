@@ -28,30 +28,43 @@ help:
 #
 ######################################################################
 
-import:
-	@echo "This target builds a tarball from tychoish's current stumpwm"
-	@echo "configuration. Unknown results for other users when using"
-	@echo "this target."
-	@echo ""
+import:$(STUMPDIR) $(STUMPDIR)/build.txt
+
+$(STUMPDIR):
 	rm -rf $(STUMPDIR)
 	mkdir $(STUMPDIR)/
 	cp -R $(SOURCE_STUMP_CONFIG)/* $(STUMPDIR)
 	rm -rf $(STUMPDIR)/config/archive/ $(STUMPDIR)/layout/* $(STUMPDIR)/archive
-	for i in `find $(STUMPDIR) -name "*.lisp"`; do sed -i -r -e "s@/home/tychoish/garen@~@g" -e "s@/home/tychoish@~@g" -e "s@xgen@work@g" -e "s@foucault@remote@g" -e "s@vpn@example.net@g" -e "s/tychoish@/whoami@/" $$i; done
-	cp $(STUMPDIR)/config/arendt.lisp $(STUMPDIR)/config/hostname.template
-	sed -i -r -e "s/arendt/HOSTNAME/g" -e "s/^(\(run-commands)(.*)$$/\;\; \1\2/g" $(STUMPDIR)/config/hostname.template
-	echo -e "\n\n ;; TODO once you have a default desktop layout that you want to us\n ;; saved, amend uncomment the following line:" >> $(STUMPDIR)/config/hostname.template
 	rm -rf $(STUMPDIR)/notifications.lisp $(STUMPDIR)/wifi.lisp $(STUMPDIR)/window-tags.lisp $(STUMPDIR)/undocumented.lisp $(STUMPDIR)/colors-wombat.lisp $(STUMPDIR)/app-menu.lisp $(STUMPDIR)/mem.lisp $(STUMPDIR)/battery.lisp
-	sed -i -r -e 's/(\(load-module "mpd"\))/;; \1/g' -e 's/(\(load-module "battery-portable"\))/;; \1/g' $(STUMPDIR)/tycho-settings.lisp
-	sed -i -e "s/--server-file=tychoish/-a emacs/" -e "s/--server-file=work/-a emacs/" -e "s/ping tychoish.com/ping 8.8.8.8/" $(STUMPDIR)/tycho-system.lisp
+	for i in `find $(STUMPDIR) -name "*.lisp"`; do sed -i -r -e "s@/home/tychoish/garen@~@g" -e "s@/home/tychoish@~@g" -e "s@xgen@work@g" -e "s@foucault@remote@g" -e "s@vpn@example.net@g" -e "s/tychoish@/whoami@/" $$i; done
+$(STUMPDIR)/build.txt:$(STUMPDIR)/config/hostname.template $(STUMPDIR)/tycho-settings.lisp $(STUMPDIR)/tycho-system.lisp
+	rm -f $@ 
+	echo $(CURRENT) >$@
+$(STUMPDIR)/config/hostname.template:
+	cp $< $@
+	echo -e "\n\n ;; TODO once you have a default desktop layout that you want to us\n ;; saved, amend uncomment the following line:" >> $(STUMPDIR)/config/hostname.template
+	sed -i -r -e "s/arendt/HOSTNAME/g" -e "s/^(\(run-commands)(.*)$$/\;\; \1\2/g" $@
+$(STUMPDIR)/tycho-settings.lisp:
+	sed -i -r -e 's/(\(load-module "mpd"\))/;; \1/g' -e 's/(\(load-module "battery-portable"\))/;; \1/g' $@
+$(STUMPDIR)/tycho-system.lisp:
+	sed -i -e "s/--server-file=tychoish/-a emacs/" -e "s/--server-file=work/-a emacs/" -e "s/ping tychoish.com/ping 8.8.8.8/" $@
 
-package:
-	mkdir -p $(BUILDDIR)/stumpwm-config/stumpwm/
-	cp -R stumpwm-config/* $(BUILDDIR)/stumpwm-config/stumpwm
-	# cp docs/stuwmpwm-readme.rst $(BUILDDIR)/stumpwm-config/README
-	# cp COPYING $(BUILDDIR)/stumpwm-config/
-	cp makefile.user $(BUILDDIR)/stumpwm-config/makefile
-	tar -C $(BUILDDIR) -czvf stumpwm-config-$(CURRENT).tar.gz stumpwm-config/
+#
+# Package Building Targets
+#
+
+package: $(BUILDDIR)/$(STUMPDIR)/stumpwm/ $(BUILDDIR)/$(STUMPDIR)/makefile  $(STUMPDIR)-$(CURRENT).tar.gz
+	@echo # cp docs/stuwmpwm-readme.rst $(BUILDDIR)/$(STUMPDIR)/README
+	@echo # cp COPYING $(BUILDDIR)/$(STUMPDIR)/
+
+$(BUILDDIR)/$(STUMPDIR)/stumpwm/:$(STUMPDIR)/build.txt
+	mkdir -p $(BUILDDIR)/$(STUMPDIR)/stumpwm/
+	cp -R $(STUMPDIR)/* $(BUILDDIR)/$(STUMPDIR)/stumpwm
+$(BUILDDIR)/$(STUMPDIR)/makefile:makefile.user
+	cp $< $@
+$(STUMPDIR)-$(CURRENT).tar.gz:
+	tar -C $(BUILDDIR) -czvf $@ $(STUMPDIR)/
+
 
 ######################################################################
 #
@@ -62,4 +75,4 @@ package:
 clean-packages:
 	rm -rf $(BUILDDIR)/*.tar.gz
 clean-build:
-	rm -rf $(BUILDDIR)/stumpwm-config/
+	rm -rf $(BUILDDIR)/$(STUMPDIR)/
