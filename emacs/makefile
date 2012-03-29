@@ -20,11 +20,11 @@ help:
 	@echo "	  clean-build	  -- removes temp files from the build directory."
 	@echo "	  clean-packages  -- removes package files from the build directory."
 
-# -include makefile.user
+# -include makefile.Packaging
 
 ######################################################################
 #
-# Packaging targets for building .emacs package. Internal.
+# user targets for building .emacs package. Internal.
 #
 ######################################################################
 
@@ -46,12 +46,15 @@ import:
 	rm -rf $(EMACSDIR)/config/archive/ $(EMACSDIR)/layout/* $(EMACSDIR)/archive
 	for i in `find $(EMACSDIR) -name "*.el"`; do 	sed -i -r -e "s@/home/tychoish@~@g" -e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" -e "s@xgen@work@g" -e "s@foucault@remote@g" -e "s@vpn@example.net@g" $$i; done
 
-package:
-	mkdir -p $(BUILDDIR)/emacs-config/emacs/
-	cp -R $(EMACSDIR)/* $(BUILDDIR)/emacs-config/emacs
-	# cp docs/stuwmpwm-readme.rst $(BUILDDIR)/emacs-config/README
-	# cp COPYING $(BUILDDIR)/emacs-config/
-	cp makefile.user $(BUILDDIR)/emacs-config/makefile
+package:$(BUILDDIR)/emacs-config/emacs $(BUILDDIR)/emacs-config/makefile emacs-config-$(CURRENT).tar.gz
+#	cp docs/stuwmpwm-readme.rst $(BUILDDIR)/emacs-config/README
+#	cp COPYING $(BUILDDIR)/emacs-config/
+$(BUILDDIR)/emacs-config/emacs:$(EMACSDIR)
+	mkdir -p $@
+	cp -R $</* $@
+$(BUILDDIR)/emacs-config/makefile:makefile.user
+	cp $< $@
+emacs-config-$(CURRENT).tar.gz:emacs-config/
 	tar -C $(BUILDDIR) -czvf emacs-config-$(CURRENT).tar.gz emacs-config/
 
 ######################################################################

@@ -1,6 +1,5 @@
 HOSTNAME := $(shell hostname -s)
 SOURCES := $(shell find $(SOURCE) \( -name "*.el" \) | grep -v -e "tycho-\|w3m\|ljupdate\|muse\|config/")
-#| grep -v "w3m" | grep -v "ljupdate" | grep -v "muse" | grep -v "config/")
 
 OUTPUTS := $(subst .el,.elc,$(SOURCES))
 
@@ -9,7 +8,7 @@ OUTPUTS := $(subst .el,.elc,$(SOURCES))
 
 all:
 
--help:
+help:
 	@echo "help crap"
 
 configure: byte-compile
