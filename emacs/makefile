@@ -1,11 +1,13 @@
 SOURCE_EMACS_CONFIG = ~/garen/emacs
-# -include makefile.userHOSTNAME := $(shell hostname -s)
+# -include makefile.user
+HOSTNAME := $(shell hostname -s)
 BUILDDIR = ../build
 CURRENT := $(shell git rev-parse HEAD)
 
 EMACSDIR = emacs-config
 SNIPPETS = $(EMACSDIR)/snippets/text-mode
-.PHONY: import install help package clean clean-package clean-build configure install force
+
+.PHONY: import install help package clean clean-package clean-build configure install 
 
 .DEFAULTGOAL = help
 
@@ -28,34 +30,43 @@ help:
 #
 ######################################################################
 
-import:
-	@echo "This target builds a tarball from tychoish's current .emacs"
-	@echo "configuration."
-	@echo ""
-	rm -rf $(EMACSDIR)
-	mkdir $(EMACSDIR)/
-	cp -R -L $(SOURCE_EMACS_CONFIG)/* $(EMACSDIR)
-	rm -rf $(EMACSDIR)/pylookup/python*-html $(EMACSDIR)/pylookup/pylookup.db $(EMACSDIR)/pylookup/.git* $(EMACSDIR)/helm/.git*
-	rm -rf $(EMACSDIR)/archive $(EMACSDIR)/config/archive $(EMACSDIR)/backup/* $(EMACSDIR)/bookmarks/*
-	rm -rf $(SNIPPETS)/markdown-mode/{linode*,rhizome*,tychoish*,wiki-sig} $(SNIPPETS)/{*gpl*,ciwp*} $(SNIPPETS)/rst-mode/linode*
-	rm -rf $(EMACSDIR)/*.elc
-	mv $(EMACSDIR)/xgen-deft.el $(EMACSDIR)/work-deft.el
-	cp $(EMACSDIR)/config/arendt.el $(EMACSDIR)/config/hostname.template
-	sed -i -r -e "s/(.*(w3m|tex|slime).*)/\;\; \1/" $(EMACSDIR)/config/hostname.template
-	mv -f $(EMACSDIR)/tycho-mail-setup-template.el $(EMACSDIR)/tycho-mail-setup.el
-	rm -rf $(EMACSDIR)/config/archive/ $(EMACSDIR)/layout/* $(EMACSDIR)/archive
-	for i in `find $(EMACSDIR) -name "*.el"`; do 	sed -i -r -e "s@/home/tychoish@~@g" -e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" -e "s@xgen@work@g" -e "s@foucault@remote@g" -e "s@vpn@example.net@g" $$i; done
+import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-template.el $(EMACSDIR)/config/hostname.template $(SNIPPETS) $(EMACSDIR)/pylookup
+	for i in `find $(EMACSDIR) -name "*.el"`; do \
+		sed -i -r -e "s@/home/tychoish@~@g" \
+		        -e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" \
+			-e "s@xgen@work@g" -e "s@foucault@remote@g" \
+			-e "s@vpn@example.net@g" -e "s@cyborginstitute.net@example.net@g" $$i; \
+	done
+	rm -rf $@/archive $@/config/archive $@/backup/* $@/bookmarks/* $@/helm/.git*
+	rm -rf $@/*.elc
+$(EMACSDIR):$(SOURCE_EMACS_CONFIG) 
+	mkdir -p $@/
+	rsync -r -L -v --delete $</ $@
+$(EMACSDIR)/pylookup:$(EMACSDIR)
+	rm -rf $@/python*-html $@/pylookup.db $@/*.zip $@/.git* 
+$(SNIPPETS):$(EMACSDIR)
+	rm -rf $(SNIPPETS)/markdown-mode/{linode*,rhizome*,tychoish*,wiki-sig} $(SNIPPETS)/{*gpl*,ciwp*} $(SNIPPETS)/rst-mode/
 
-package:$(BUILDDIR)/emacs-config/emacs $(BUILDDIR)/emacs-config/makefile emacs-config-$(CURRENT).tar.gz
-#	cp docs/stuwmpwm-readme.rst $(BUILDDIR)/emacs-config/README
-#	cp COPYING $(BUILDDIR)/emacs-config/
-$(BUILDDIR)/emacs-config/emacs:$(EMACSDIR)
+$(EMACSDIR)/xgen-deft.el:$(EMACSDIR)
+$(EMACSDIR)/tycho-mail-setup.el:$(EMACSDIR)
+$(EMACSDIR)/config/arendt.el:$(EMACSDIR)
+
+$(EMACSDIR)/work-deft.el:$(EMACSDIR)/xgen-deft.el
+	mv $< $@
+$(EMACSDIR)/tycho-mail-setup-template.el:$(EMACSDIR)/tycho-mail-setup.el
+	mv -f $< $@
+$(EMACSDIR)/config/hostname.template:$(EMACSDIR)/config/arendt.el
+	cp $< $@
+	sed -i -r -e "s/(.*(w3m|tex|slime).*)/\;\; \1/" $@
+
+package:$(BUILDDIR)/$(EMACSDIR)/emacs $(BUILDDIR)/$(EMACSDIR)/makefile $(EMACSDIR)-$(CURRENT).tar.gz
+$(BUILDDIR)/$(EMACSDIR)/emacs:$(EMACSDIR)
 	mkdir -p $@
 	cp -R $</* $@
-$(BUILDDIR)/emacs-config/makefile:makefile.user
+$(BUILDDIR)/$(EMACSDIR)/makefile:makefile.user
 	cp $< $@
-emacs-config-$(CURRENT).tar.gz:emacs-config/
-	tar -C $(BUILDDIR) -czvf emacs-config-$(CURRENT).tar.gz emacs-config/
+$(EMACSDIR)-$(CURRENT).tar.gz:$(EMACSDIR)/
+	tar -C $(BUILDDIR) -czvf $(EMACSDIR)-$(CURRENT).tar.gz $(EMACSDIR)/
 
 ######################################################################
 #
@@ -66,4 +77,4 @@ emacs-config-$(CURRENT).tar.gz:emacs-config/
 clean-packages:
 	rm -rf $(BUILDDIR)/*.tar.gz
 clean-build:
-	rm -rf $(BUILDDIR)/emacs-config
+	rm -rf $(BUILDDIR)/$(EMACSDIR)
