@@ -1,0 +1,32 @@
+===========
+Emacs Stack
+===========
+
+WRITE doc
+
+Overview
+--------
+
+Release
+-------
+
+Use
+---
+
+Points of Interest
+------------------
+
+Setup and Customization
+-----------------------
+
+Internals
+---------
+
+Files Overview
+~~~~~~~~~~~~~~
+
+Variables
+~~~~~~~~~
+
+Functions
+~~~~~~~~~

@@ -1,0 +1,37 @@
+==============
+Personal Stack
+==============
+
+The goal of the  "Stack" project is to collect a number of "quality
+working defaults," for programs like `Emacs`_ and `StumpWM`_ to
+provides users with a starting point for their own configuration and
+customization development. While both of these programs (and others)
+are very powerful tools, without some amount of configuration these
+tools are not particularly useful.
+
+I'm producing these configurations from the configurations I use every
+day. The methodology that I used for extracting and packaging this
+configuration is available in `this repository`_, and
+
+Continue reading for more inform
+
+-- `tychoish`_
+
+.. _`Emacs`:http://www.gnu.org/software/emacs/
+.. _`StumpWM`:http://stumpwm.org/
+.. _`tychoish`:http://tychoish.com/
+.. _`this repository`: http://git.cyborginstitute.net/?p=stack.git;a=summary
+
+Releases
+--------
+
+TODO develop a way to link to the current releases.
+
+Documentation
+-------------
+
+.. toctree::
+   :maxdepth: 2
+
+   emacs
+   stumpwm
