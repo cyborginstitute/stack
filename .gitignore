@@ -4,5 +4,5 @@
 #*#
 .svn*
 .#*
-build*
+build/*
 *.tar.gz
