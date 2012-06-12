@@ -1,14 +1,22 @@
-================================================
-Cyborg Institute Default Build Bot Configuration
-================================================
+===============================================
+Cyborg Institute Default Buildbot Configuration
+===============================================
+
+Synopsis
+--------
 
 This base configuration provides a very clear, very sparse framework
 for developing your very own `Buildbot`_  configuration, in a sane,
 organized and manageable fashion without potentially confusing
-defaults. 
+defaults. This base configuration is directly derived from the
+`metabbotcfg`_ configuration file
 
-Full documentation will eventually reside at `cyborginstitute.org/projects/stack/buildbot`_; 
-however, to use this default configuration: 
+Full documentation will eventually reside at
+`cyborginstitute.org/projects/stack/buildbot`_, which currently
+mirrors the README.
+
+Use
+---
 
 1. Make a directory for your all buildbot files. Such as: :: 
 
@@ -54,7 +62,7 @@ own buildbot configuration
 If you have any issues with this, please send a message to the `cyborg
 institute listserv`_
 
-.. _`Buildbot`: http://buildbot.org
+.. _`Buildbot`: http://buildbot.net
 .. _`cyborginstitute.org/projects/stack/buildbot`: http://cyborginstitute.org/projects/stack/buildbot
 .. _`metabbotcfg`: https://github.com/buildbot/metabbotcfg
 .. _`Mozilla Buildbot Configurations`: https://github.com/mozilla/buildbot-configs
