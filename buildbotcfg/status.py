@@ -16,10 +16,10 @@ status.append(html.WebStatus(
 		change_hook_dialects={ 'github' : True },
 		))
 
-from buildbot.status import words
-status.append(words.IRC(host="irc.oftc.net", nick="institute-bb",
-				notify_events={
-					'successToFailure' : 1,
-					'failureToSuccess' : 1,
-				},
-                              channels=["#institute"]))
+# from buildbot.status import words
+# status.append(words.IRC(host="irc.oftc.net", nick="institute-bb",
+# 				notify_events={
+# 					'successToFailure' : 1,
+# 					'failureToSuccess' : 1,
+# 				},
+#                               channels=["#institute"]))

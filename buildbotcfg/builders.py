@@ -20,8 +20,6 @@ from buildbot.steps.python_twisted import Trial
 from buildbot.steps.python import PyFlakes
 from buildbot.config import BuilderConfig
 
-builders = []
-
 # slaves seem to have a hard time fetching from github, so retry every 5
 # seconds, 5 times
 GIT_RETRY = (5,5)
@@ -35,6 +33,18 @@ def institute_site_factory():
 
     return f
 
+    return f
+
+######################################################################
+
+builder_names = [ "institute-site" ]
+polled_builder_names = [ "other-builder" ]
+
+builders = []
+
 builders.append(BuilderConfig(name="institute-site",
                               slavenames=["sphinx"],
                               factory=institute_site_factory()))
+# builders.append(BuilderConfig(name="other-builder",
+#                               slavenames=["sphinx"],
+#                               factory=other_builder_factory()))
