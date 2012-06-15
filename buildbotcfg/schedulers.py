@@ -14,13 +14,13 @@ schedulers = []
 
 manual_builder = ChangeFilter(project=builder_names, branch='master')
 schedulers.append(SingleBranchScheduler(name="all", 
-                                        treeStableTimer=None,
+                                        treeStableTimer=15,
                                         change_filter=manual_builder,
                                         builderNames=builder_names))
 
 polled_builder = ChangeFilter(project='polled-docs', branch='master')
 schedulers.append(SingleBranchScheduler(name="mongodb", 
-                                        treeStableTimer=None,
+                                        treeStableTimer=15,
                                         change_filter=polled_filter,
                                         builderNames=polled_builder_names))
 
