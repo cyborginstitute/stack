@@ -13,19 +13,25 @@ I'm producing these configurations from the configurations I use every
 day. The methodology that I used for extracting and packaging this
 configuration is available in `this repository`_, and
 
-Continue reading for more inform
+Continue reading for more information about the components of the
+stack.
 
 -- `tychoish`_
 
-.. _`Emacs`:http://www.gnu.org/software/emacs/
-.. _`StumpWM`:http://stumpwm.org/
-.. _`tychoish`:http://tychoish.com/
+.. _`Emacs`: http://www.gnu.org/software/emacs/
+.. _`StumpWM`: http://stumpwm.org/
+.. _`tychoish`: http://tychoish.com/
 .. _`this repository`: http://git.cyborginstitute.net/?p=stack.git;a=summary
 
 Releases
 --------
 
-TODO develop a way to link to the current releases.
+.. toctree::
+   :hidden: 
+   
+   downloads
+
+See more information on ":doc:`downloads`" page. 
 
 Documentation
 -------------
@@ -35,3 +41,4 @@ Documentation
 
    emacs
    stumpwm
+   buildbot

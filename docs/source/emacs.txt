@@ -2,10 +2,37 @@
 Emacs Stack
 ===========
 
-WRITE doc
-
 Overview
 --------
+
+Emacs is an incredibly useful piece of software, but the default
+configuration is difficult to use, and makes it difficult to
+appreciate the capabilities of the program, understand how to
+customize the environment, or even use the software effectively for
+basic text editing tasks. Once you become familiar with Emacs and have
+begun to customize it yourself, the rational for the "no default
+configuration," becomes clear, but it's difficult to get to this point
+and there's no good reason to leave would-be emacs users to fend for
+themselves.
+
+The "emacs-stack", then, provides a good example configuration that
+users may find helpful as an example of how to manage a large and
+complex emacs configuration, and a set of good, working defaults
+derived from `tycho's <http://tychoish.com>`_ working
+configuration. In contrast to some other attempts to provide a good
+introductory default to emacs, this "distribution," of emacs code does
+not attempt to package emacs itself, nor does it attempt to deliver an
+emacs experience designed to be easy to learn for users of another
+system or environment. Rather, the emacs-stack presents a faithful
+example of a real "working" emacs configuration.
+
+The distribution contains a directory named ``emacs/`` that contains
+all emacs lisp files and a ``makefile`` that manages installation,
+removal, and byte-compilation of the emacs configuration. Most of the
+files in this distribution are publicly available and freely licensed
+packages, but there are a number of files that configure key-bindings,
+configure variables and settings, and provide some custom "glue
+functions" that are original to this configuration.
 
 Release
 -------
@@ -16,17 +43,150 @@ Use
 Points of Interest
 ------------------
 
+- ``tycho-`` files contain specific configuration and integration
+  of the emacs packages into the "stack." Of particular note are
+  ``tycho-emacs.el`` and ``tycho-init.el``: ``tycho-emacs.el``
+  contains the core configuration, while ``tycho-init.el`` guides the
+  initialization process for running multiple instances of emacs'
+  daemon mode with different configurations. 
+
+- ``tycho-keybinding.el`` holds most of the keybindings. Review this
+  file before using emacs-stack to become familiar with the interface. 
+
+- ``config/`` the files in config, provide the "gateway" in the
+  initialization process to all of the ``tycho-`` files. All the files
+  reflect a hostname for one of your systems, and make it possible
+  have machine specific configuration. The ``makefile`` will a file
+  from this directory to your systems ``~/.emacs`` file.
+
+- ``makefile`` will byte-compile *all* files in the distribution,
+  create a host specific file in the ``config/`` directory, archive
+  your current ``~/.emacs`` file, and create a symbolic link to your
+  new emacs config.
+
 Setup and Customization
 -----------------------
 
-Internals
----------
+See the :doc:`downloads page <downloads>` for a link to the latest
+tarball with a copy of the emacs-stack release. Download this file,
+using the following command: 
 
-Files Overview
-~~~~~~~~~~~~~~
+.. code-block:: sh
 
-Variables
-~~~~~~~~~
+   cd
+   wget http://download.cyborginstitute.net/emacs-stack.tar.gz
 
-Functions
-~~~~~~~~~
+Then extract the archive: 
+
+.. code-block:: sh
+
+   tar -xxv emacs-stack.tar.gz
+   
+Then run the ``make`` process to install the new configuration. 
+
+.. code-block:: sh
+
+   make install
+   
+When complete the script will archive your existing ``~/.emacs`` file
+in your home directory and ``~/.emacs`` will be a symbolic link that
+points to a file in ``emacs/config/``, and all emacs lisp files will
+be byte-compiled.
+
+You can edit any of the emacs lisp files as ended for your
+configuration. Run the following make operation at any point after
+changing the lisp files to update the byte-compiled files:
+
+.. code-block:: sh
+
+   make byte-compile
+      
+Continue reading for more information on the specific opportunities
+for customization and components of the emacs-stack.
+
+Internal Overview
+-----------------
+
+Many of the files included in the distribution are third-party
+libraries and scripts. The files in the ``config/`` directory, and all
+files beginning with ``tycho-`` provide the integration and originate
+with this distribution. 
+
+.. note:: 
+
+   There is no guarantee that any of the emacs lisp included in this
+   package is: bug free, up to date, or unavailable through other
+   means.
+
+The following list introduces the core components of the emacs stack,
+that create the entire experience
+
+.. index:: config/hostname.el
+.. describe:: config/hostname.el
+
+   Contains all machine specific configuration. Ideally, these files
+   are all unique to the machine, but there is some duplication in
+   practice. 
+   
+   Your user account's ``~/.emacs`` file should be a symlink to this
+   file.
+   
+   Do not insert lisp into this file unless it causes an inter-system
+   compatibility issue.
+
+.. index:: tycho-init.el
+.. describe:: tycho-init.el
+
+   This file controls the initialization process, and grows out of a
+   need to maintain two or more emacs daemon instances on the same
+   system *with* different desktop (i.e. state) systems.
+
+.. index:: tycho-emacs.el
+.. describe:: tycho-emacs.el
+
+   This is the core configuration file, and most of the other
+   ``tycho-`` files are required from this file. At some point in the
+   distant history all of the ``tycho-`` files *were* in this file,
+   now ``tycho-emacs.el`` contains ``(require)`` calls and sets a
+   number of variables and settings.
+
+.. index:: tycho-display.el
+.. describe:: tycho-display.el
+
+   Contains all visual modifications to emacs' display and font
+   selection. Implemented as a series of functions the ``init`` file
+   requires this file and then calls one of these functions during the
+   display process. 
+   
+   Alternatively, you may, use your ``~/.Xdefaults`` file with the
+   following lines to control your Emacs appearance a bit more
+   cleanly: 
+   
+   .. code-block:: ini
+   
+      emacs.menuBar:off
+      emacs.FontBackend:xft
+      Emacs.font: inconsolata:pixelsize=14:antialias=true:hinting=true
+      Emacs.pane.menubar.font: inconsolata:pixelsize=14:antialias=true:hinting=true
+
+.. index:: tycho-deft.el
+.. describe:: tycho-deft.el
+
+   Provides some fairly significant wrappers around `Deft
+   <http://jblevins.org/projects/deft/>`_, similar to the code in
+   ``tycho-ikiwiki.el``.
+
+.. index:: tycho-keybindings.el
+.. describe:: tycho-keybindings.el
+
+   In most cases, the ``tycho-keybindings.el`` file specifies all
+   custom keybindings that don't directly relate or depend on other
+   code. For instance org-relgated bindings are stored in
+   ``tycho-org.el``.
+
+All other ``tycho-`` files contain simple wrappers and configuration
+around otherwise unmodified lisp files and packages obtained from
+third party sources. Comments may be sparce, but feel free to open an
+inquiry on `lists.cyborginstitue.net
+<http://lists.cyborginstitute.net/>`_ for a documentation and/or
+commenting enhancement.

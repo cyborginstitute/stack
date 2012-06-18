@@ -2,31 +2,139 @@
 StumpWM Stack
 =============
 
-WRITE doc
+EDIT
 
 Overview
 --------
 
+`StumpWM`_ is a manual tiling window manager written in Common Lisp,
+with an interaction paradigm inspired by GNU Screen and Emacs. Stump
+has a minimal feature set, with support for dual monitors, multiple
+window groups (i.e. virtual desktops,) and full keyboard driven
+interaction, and has many opportunities for extension.
+
+While the default StumpWM configuration is operable, there is no
+default configuration distributed with StumpWM that provides a "base
+configuration" for hacking, customization, and practical use. The
+"StumpWM" stack provides such an example derived from an actual
+day-to-day StumpWM configuration. In turn, this document, provides an
+outline of this configuration and its use.
+
+.. _`StumpWM`: http://stumpwm.org/ 
+
 Release
 -------
+
+- links once we can generate them on the index.
 
 Use
 ---
 
+To use this StumpWM configuration you must: 
+
+- have StumpWM installed and operable on your system
+
+- Follow a few simple :ref:`steps <stumpwm-setup>` to organize the
+  configuration so that StumpWM will read the new configuration.
+
+From here, you can continue to develop and tweak the configuration,
+and offer your own fork or variant, *or* submit patches/merge (pull)
+requests to the `listserv`_!
+
+.. _`listserv`: http://lists.cyborginstitute.net/listinfo/institute
+
 Points of Interest
 ------------------
+
+The distribution of this StumpWM config comes with the following
+components:
+
+- A ``makefile`` which contains a default message for "installing" and
+  setting up the StumpWM configuration. 
+
+  This process is non-destructive, and will not delete your current
+  StumpWM configuration (if you have one.) Rather, it will move an
+  existing ``~/.stumpwmrc`` file to a ``~/stumpwmrc-`` file with a
+  timestamp appended.
+  
+- A ``stumpwm`` directory that holds this StumpWM configuration. This
+  includes components from the ``contrib`` directory of StumpWM, as
+  well as some semi-custom configuration. Within this directory there
+  are the following components: 
+  
+  - ``config/`` this is where the site-specific or host-specific
+    configuration goes. If you have any configuration that you need to
+    that depends on the host, or are using the same basic
+    configuration on a number of hosts but have some differences, you
+    store that configuration here.
+    
+    To be fair, you could write Lisp code to implement different
+    configuration subsets based on environment information; however,
+    this is difficult to use and track if you have to add and possibly
+    remove hosts regularly/ever, and doesn't offer any real
+    benefits. '
+  
+  - ``tycho-`` files inside of the ``stumpwm/`` configuration, contain
+    lisp which is mostly unique to this configuration. These files are
+    where all of the "interesting" things happen: 
+    
+    - ``tycho-keybindings.lisp`` holds all keybindings. 
+    
+    - ``tycho-system.lisp`` holds all custom commands and definitions.
+    
+    - ``tycho-settings.lisp`` holds all configuration and settings
+      that aren't keybindings or functions.
+  
+  - Other lisp files, typically derived from the StumpWM contrib
+    folder.
+
+.. _stumpwm-setup: 
+.. _stumpwm-use:
 
 Setup and Customization
 -----------------------
 
-Internals
----------
+To use: 
 
-Files Overview
-~~~~~~~~~~~~~~
+#. Install StumpWM and all of its dependencies. Whatever method you
+   use to install these software packages should be sufficient. The
+   most common configuration for StumpWM is to use: the ``sbcl`` lisp
+   system, the latest ``clx`` version (i.e. from git.) and a
+   compiled/installed version of StumpWM from git. There are packages
+   for this on Arch Linux. Other distributions, and quicklisp should
+   be functional for this task.
 
-Variables
-~~~~~~~~~
+#. Download the distribution, into your home directory. The command
+   will resemble: 
 
-Functions
-~~~~~~~~~
+   .. code-block:: sh
+   
+      cd
+      wget http://download.cyborginstitute.net/stumpwm-config-latest.tar.gz
+      
+#. Extract the archive: 
+
+   .. code-block:: sh
+   
+      tar -zxvf stumpwm-config-latest.tar.gz
+
+#. Build the "configure" target.
+
+   .. code-block:: sh
+      cd ~/stumpwm
+
+#. Inspect the content of the ``~/stumpwm-config/stump``
+   directory. Confirm that the configured stumpwm instance is
+   suitable. 
+   
+#. Build the "install" target. This will rename and timestamp your
+   current ``.stumpwmrc`` file and create a new ``.stumpwmrc`` that is
+   a symbolic link which points to ``~/stumpwm/config/[hostname].lisp``, 
+   that replaces ``[hostname]`` with the hostname of your machine. 
+
+#. Restart StumpWM with the new config. 
+
+Continue to tweak the lisp files in and ``~/stumpwm`` as well as
+``[hostname].lisp`` as needed. In general, place all machine-specific
+configuration in ``[hostname].lisp``, and general configuration in the
+``tycho-`` or other files in the ``~/stumpwm`` directory. 
