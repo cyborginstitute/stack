@@ -2,8 +2,6 @@
 StumpWM Stack
 =============
 
-EDIT
-
 Overview
 --------
 
@@ -11,21 +9,37 @@ Overview
 with an interaction paradigm inspired by GNU Screen and Emacs. Stump
 has a minimal feature set, with support for dual monitors, multiple
 window groups (i.e. virtual desktops,) and full keyboard driven
-interaction, and has many opportunities for extension.
+interaction, and has many opportunities for extension. Although there
+is minimal current development, the software is stable, has wide use,
+and is very extensible.
 
-While the default StumpWM configuration is operable, there is no
-default configuration distributed with StumpWM that provides a "base
-configuration" for hacking, customization, and practical use. The
-"StumpWM" stack provides such an example derived from an actual
+The default StumpWM configuration is operable, however there are no
+default configurations distributed with StumpWM to provide a "base
+configuration" for hacking, customization, and practical use. This
+"StumpWM stack" provides such an example derived from an actual
 day-to-day StumpWM configuration. In turn, this document, provides an
-outline of this configuration and its use.
+outline of the stack, and its configuration and use.
 
 .. _`StumpWM`: http://stumpwm.org/ 
 
 Release
 -------
 
-- links once we can generate them on the index.
+The latest release is always available at `http://download.cyborginstitute.net/stumpwm-config.tar.gz`_. 
+
+You can always view past archival releases by visiting
+`http://download.cyborginstitute.net/`_, where releases reflect the
+full commit hash of the `stack project`_ `git repository`_ (`github`_). 
+
+Please submit an `issue to the mailing list`_ if you'd would like to
+see a more formal release process or numbering system.
+
+.. _`http://download.cyborginstitute.net/stumpwm-config.tar.gz`: http://download.cyborginstitute.net/stumpwm-config.tar.gz
+.. _`http://download.cyborginstitute.net/`: http://download.cyborginstitute.net/
+.. _`stack project`: http://cyborginstitute.org/projects/stack/
+.. _`git repository`: http://git.cyborginstitute.net/?p=stack.git
+.. _`github`: http://github.com/cyborginstitute/stack
+.. _`issue to the mailing list`: http://lists.cyborginstitute.net/institute
 
 Use
 ---
@@ -63,17 +77,17 @@ components:
   are the following components: 
   
   - ``config/`` this is where the site-specific or host-specific
-    configuration goes. If you have any configuration that you need to
+    configuration goes. If you have any configuration that you need
     that depends on the host, or are using the same basic
-    configuration on a number of hosts but have some differences, you
-    store that configuration here.
+    configuration on a number of hosts but have limited per-machine
+    differences, store that configuration here.
     
     To be fair, you could write Lisp code to implement different
     configuration subsets based on environment information; however,
     this is difficult to use and track if you have to add and possibly
-    remove hosts regularly/ever, and doesn't offer any real
-    benefits. '
-  
+    remove hosts regularly/ever it might become confusing and hard to
+    maintain.
+
   - ``tycho-`` files inside of the ``stumpwm/`` configuration, contain
     lisp which is mostly unique to this configuration. These files are
     where all of the "interesting" things happen: 
@@ -99,10 +113,10 @@ To use:
 #. Install StumpWM and all of its dependencies. Whatever method you
    use to install these software packages should be sufficient. The
    most common configuration for StumpWM is to use: the ``sbcl`` lisp
-   system, the latest ``clx`` version (i.e. from git.) and a
-   compiled/installed version of StumpWM from git. There are packages
-   for this on Arch Linux. Other distributions, and quicklisp should
-   be functional for this task.
+   system, the latest ``clx`` version (i.e. from git,) and a
+   compiled/installed version of itself StumpWM from git. There are
+   packages for this on Arch Linux. Other distributions, and quicklisp
+   should be functional for this task, but have not been tested.
 
 #. Download the distribution, into your home directory. The command
    will resemble: 
@@ -121,7 +135,9 @@ To use:
 #. Build the "configure" target.
 
    .. code-block:: sh
+
       cd ~/stumpwm
+      make configure
 
 #. Inspect the content of the ``~/stumpwm-config/stump``
    directory. Confirm that the configured stumpwm instance is
@@ -131,6 +147,10 @@ To use:
    current ``.stumpwmrc`` file and create a new ``.stumpwmrc`` that is
    a symbolic link which points to ``~/stumpwm/config/[hostname].lisp``, 
    that replaces ``[hostname]`` with the hostname of your machine. 
+
+   .. code-block:: sh
+   
+      make install
 
 #. Restart StumpWM with the new config. 
 

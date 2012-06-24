@@ -2,6 +2,17 @@
 Downloads
 =========
 
-TODO build downloads page and mechanism
+Please see the `Cyborg Institute download resource
+<http://download.cyborginstitute.net>`_ for a full listing of
+available :doc:`stack` packages available for download, including
+archived versions. 
 
-FUTURE insert text into stack documents/index with links/info to downloads
+All packages and related tooling are available via git, at all times:
+
+- `stack on git.cyborginstitute.net <http://git.cyborginstitute.net/?p=stack.git>`_
+- `stack on github  <http://github.com/cyborginstitute/stack>`_
+
+In general: 
+
+- The latest version of `stumpwm-config <http://download.cyborginstitute.net/stumpwm-config.tar.gz>`_
+- The latest version of `emacs-config <http://download.cyborginstitute.net/emacs-config.tar.gz>`_

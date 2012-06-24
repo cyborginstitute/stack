@@ -37,8 +37,21 @@ functions" that are original to this configuration.
 Release
 -------
 
-Use
----
+The latest release is always available at `http://download.cyborginstitute.net/emacs-config.tar.gz`_. 
+
+You can always view past archival releases by visiting
+`http://download.cyborginstitute.net/`_, where releases reflect the
+full commit hash of the `stack project`_ `git repository`_ (`github`_). 
+
+Please submit an `issue to the mailing list`_ if you'd would like to
+see a more formal release process or numbering system.
+
+.. _`http://download.cyborginstitute.net/emacs-config.tar.gz`: http://download.cyborginstitute.net/emacs-config.tar.gz
+.. _`http://download.cyborginstitute.net/`: http://download.cyborginstitute.net/
+.. _`stack project`: http://cyborginstitute.org/projects/stack/
+.. _`git repository`: http://git.cyborginstitute.net/?p=stack.git
+.. _`github`: http://github.com/cyborginstitute/stack
+.. _`issue to the mailing list`: http://lists.cyborginstitute.net/institute
 
 Points of Interest
 ------------------
