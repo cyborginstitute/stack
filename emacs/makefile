@@ -7,7 +7,7 @@ CURRENT := $(shell git rev-parse HEAD)
 EMACSDIR = emacs-config
 SNIPPETS = $(EMACSDIR)/snippets/text-mode
 
-.PHONY: import install help package clean clean-package clean-build configure install 
+.PHONY: import install help package clean clean-package clean-build configure install
 
 .DEFAULTGOAL = help
 
@@ -30,26 +30,26 @@ help:
 #
 ######################################################################
 
-import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-template.el $(EMACSDIR)/config/hostname.template $(SNIPPETS) $(EMACSDIR)/pylookup
+import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-template.el $(EMACSDIR)/config/hostname.template $(SNIPPETS)
 	for i in `find $(EMACSDIR) -name "*.el"`; do \
 		sed -i -r -e "s@/home/tychoish@~@g" \
-		        -e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" \
+			-e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" \
 			-e "s@xgen@work@g" -e "s@foucault@remote@g" \
 			-e "s@vpn@example.net@g" -e "s@cyborginstitute.net@example.net@g" $$i; \
 	done
-	rm -rf $@/archive $@/config/archive $@/backup/* $@/bookmarks/* $@/helm/.git*
-	rm -rf $@/*.elc
-$(EMACSDIR):$(SOURCE_EMACS_CONFIG) 
-	mkdir -p $@/
-	rsync -r -L -v --delete $</ $@
-$(EMACSDIR)/pylookup:$(EMACSDIR)
-	rm -rf $@/python*-html $@/pylookup.db $@/*.zip $@/.git* 
-$(SNIPPETS):$(EMACSDIR)
+	rm -rf $(EMACSDIR)/archive $(EMACSDIR)/config/archive $(EMACSDIR)/backup/* $(EMACSDIR)/bookmarks/* $(EMACSDIR)/helm/.git*
+	rm -rf $(EMACSDIR)/pylookup/python*-html $(EMACSDIR)/pylookup/pylookup.db $(EMACSDIR)/pylookup/*.zip $(EMACSDIR)/pylookup/.git*
 	rm -rf $(SNIPPETS)/markdown-mode/{linode*,rhizome*,tychoish*,wiki-sig} $(SNIPPETS)/{*gpl*,ciwp*} $(SNIPPETS)/rst-mode/
 
-$(EMACSDIR)/xgen-deft.el:$(EMACSDIR)
+	rm -rf $(EMACSDIR)/*.elc
+
+$(EMACSDIR):$(SOURCE_EMACS_CONFIG)
+	mkdir -p $@/
+	rsync -r -L -v --delete $</ $@
+
 $(EMACSDIR)/tycho-mail-setup.el:$(EMACSDIR)
 $(EMACSDIR)/config/arendt.el:$(EMACSDIR)
+$(EMACSDIR)/xgen-deft.el:$(EMACSDIR)
 
 $(EMACSDIR)/work-deft.el:$(EMACSDIR)/xgen-deft.el
 	mv $< $@
@@ -59,14 +59,14 @@ $(EMACSDIR)/config/hostname.template:$(EMACSDIR)/config/arendt.el
 	cp $< $@
 	sed -i -r -e "s/(.*(w3m|tex|slime).*)/\;\; \1/" $@
 
-package:$(BUILDDIR)/$(EMACSDIR)/emacs $(BUILDDIR)/$(EMACSDIR)/makefile $(EMACSDIR)-$(CURRENT).tar.gz
+package:$(BUILDDIR)/$(EMACSDIR)/emacs $(BUILDDIR)/$(EMACSDIR)/makefile $(BUILDDIR)/$(EMACSDIR)-$(CURRENT).tar.gz
 $(BUILDDIR)/$(EMACSDIR)/emacs:$(EMACSDIR)
 	mkdir -p $@
-	cp -R $</* $@
+	rsync -r -L -v --delete  $</ $@
 $(BUILDDIR)/$(EMACSDIR)/makefile:makefile.user
 	cp $< $@
-$(EMACSDIR)-$(CURRENT).tar.gz:$(EMACSDIR)/
-	tar -C $(BUILDDIR) -czvf $(EMACSDIR)-$(CURRENT).tar.gz $(EMACSDIR)/
+$(BUILDDIR)/$(EMACSDIR)-$(CURRENT).tar.gz:$(EMACSDIR)
+	tar -C $(BUILDDIR) -czvf $(BUILDDIR)/$(EMACSDIR)-$(CURRENT).tar.gz $(EMACSDIR)
 
 ######################################################################
 #
@@ -78,3 +78,5 @@ clean-packages:
 	rm -rf $(BUILDDIR)/*.tar.gz
 clean-build:
 	rm -rf $(BUILDDIR)/$(EMACSDIR)
+clean:
+	rm -rf $(EMACSDIR)

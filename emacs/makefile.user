@@ -41,3 +41,9 @@ clean:
 	-rm -f emacs/*.elc
 	@echo "install your previous .emacs or restart for the default"
 	@echo "configuraiton"
+
+pydoc: 
+	wget https://bitbucket.org/jonwaltman/pydoc-info/downloads/python.info.gz
+	gunzip python.info
+	sudo cp python.info /usr/share/info
+	sudo install-info --info-dir=/usr/share/info python.info
