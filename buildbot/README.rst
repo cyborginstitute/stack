@@ -18,6 +18,11 @@ mirrors the README.
 Use
 ---
 
+.. note::
+   
+   The creation of the ``makefile`` in this repository has supplanted
+   most of this document. Run ``make help`` for more information. 
+
 1. Make a directory for your all buildbot files. Such as: :: 
 
       mkdir ~/buildbot
