@@ -24,27 +24,36 @@ from buildbot.config import BuilderConfig
 # seconds, 5 times
 GIT_RETRY = (5,5)
 
-def institute_site_factory():
+def sphinx_factory(repo, target='publish', branch='master'):
     f = factory.BuildFactory()
 
     # check out the source
-    f.addStep(Git(repourl='gitosis@foucault.cyborginstitute.net:institute.git', mode='copy', retry=GIT_RETRY))
-    f.addStep(ShellCommand(command=["make", "html"]))
+    f.addStep(Git(repourl=repo,
+                  branch=branch,
+                  retry=GIT_RETRY))
 
-    return f
-
-    return f
+    # run the build process.
+    f.addStep(ShellCommand(command=["make", target]))
 
 ######################################################################
 
-builder_names = [ "institute-site" ]
-polled_builder_names = [ "other-builder" ]
+builder_names = []
+polled_builder_names = []
 
 builders = []
 
-builders.append(BuilderConfig(name="institute-site",
-                              slavenames=["sphinx"],
-                              factory=institute_site_factory()))
-# builders.append(BuilderConfig(name="other-builder",
-#                               slavenames=["sphinx"],
-#                               factory=other_builder_factory()))
+def add_builder(name, target, repo, branch, schedule, slave):
+
+
+    builders.append(BuilderConfig(name=name,
+                                  slavenames=[slave],
+                                  factory=sphinx_factory(repo, target, branch)))
+
+    if schedule == 'standard':
+        builder_names.append(name)
+    elif schedule =='polled':
+        polled_builder_names.append(name)
+
+institute_repo = 'gitosis@foucault.cyborginstitute.net:instititue.git'
+
+add_builder('institute-site', 'html', institute_repo, 'master', 'standard', 'sphinx')

@@ -5,23 +5,22 @@ from buildbot.schedulers.trysched import Try_Userpass
 
 from buildbot.changes.filter import ChangeFilter
 
-builder_names = [ "institute-site", "institute-internal" ]
-polled_builder_names = [ "polled-builder" ]
+from config.builders import builder_names, polled_builder_names
 
 all_builder_names = builder_names + polled_builder_names
 
 schedulers = []
 
 manual_builder = ChangeFilter(project=builder_names, branch='master')
-schedulers.append(SingleBranchScheduler(name="all", 
+schedulers.append(SingleBranchScheduler(name="all",
                                         treeStableTimer=15,
                                         change_filter=manual_builder,
                                         builderNames=builder_names))
 
-polled_builder = ChangeFilter(project='polled-docs', branch='master')
-schedulers.append(SingleBranchScheduler(name="mongodb", 
+polled_builder = ChangeFilter(project=polled_builder_names, branch='master')
+schedulers.append(SingleBranchScheduler(name="mongodb",
                                         treeStableTimer=15,
-                                        change_filter=polled_filter,
+                                        change_filter=polled_builder,
                                         builderNames=polled_builder_names))
 
 schedulers.append(ForceScheduler(name="force",
