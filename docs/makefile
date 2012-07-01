@@ -16,11 +16,9 @@ ALLSPHINXOPTS	= -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) sourc
 # Publication system
 #
 
-publish: $(BUILDDIR)/publish/
+publish: $(BUILDDIR)/publish
 	$(MAKE) -j2 $(BUILDDIR)/publish/stack.pdf $(BUILDDIR)/publish/stack.epub
 
-$(BUILDDIR)/publish/:$(BUILDDIR)/dirhtml
-	mkdir -p $@ 
 $(BUILDDIR)/dirhtml:dirhtml
 $(BUILDDIR)/latex/stack.tex:latex
 $(BUILDDIR)/epub/tychoishPersonalStack.epub:epub
@@ -28,7 +26,8 @@ $(BUILDDIR)/latex/stack.pdf:$(BUILDDIR)/latex/stack.tex
 $(BUILDDIR)/publish/stack.epub:$(BUILDDIR)/epub/tychoishPersonalStack.epub
 	cp $< $@
 $(BUILDDIR)/publish:$(BUILDDIR)/dirhtml
-	cp -R $< $@
+	mkdir -p $@
+	cp -R $</* $@
 $(BUILDDIR)/publish/stack.pdf:$(BUILDDIR)/latex/stack.pdf
 	cp $< $@
 

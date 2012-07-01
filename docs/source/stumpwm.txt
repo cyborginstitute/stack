@@ -39,7 +39,7 @@ see a more formal release process or numbering system.
 .. _`stack project`: http://cyborginstitute.org/projects/stack/
 .. _`git repository`: http://git.cyborginstitute.net/?p=stack.git
 .. _`github`: http://github.com/cyborginstitute/stack
-.. _`issue to the mailing list`: http://lists.cyborginstitute.net/institute
+.. _`issue to the mailing list`: http://lists.cyborginstitute.net/listinfo/institute
 
 Use
 ---
