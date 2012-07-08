@@ -45,16 +45,16 @@ import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-templat
 
 $(EMACSDIR):$(SOURCE_EMACS_CONFIG)
 	mkdir -p $@/
-	rsync -r -L -v --delete $</ $@
+	rsync -r -L --delete $</ $@
 
 $(EMACSDIR)/tycho-mail-setup.el:$(EMACSDIR)
 $(EMACSDIR)/config/arendt.el:$(EMACSDIR)
 $(EMACSDIR)/xgen-deft.el:$(EMACSDIR)
 
 $(EMACSDIR)/work-deft.el:$(EMACSDIR)/xgen-deft.el
-	mv $< $@
+	-mv $< $@
 $(EMACSDIR)/tycho-mail-setup-template.el:$(EMACSDIR)/tycho-mail-setup.el
-	mv -f $< $@
+	-mv -f $< $@
 $(EMACSDIR)/config/hostname.template:$(EMACSDIR)/config/arendt.el
 	cp $< $@
 	sed -i -r -e "s/(.*(w3m|tex|slime).*)/\;\; \1/" $@
