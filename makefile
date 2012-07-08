@@ -10,9 +10,6 @@ $(BUILDDIR)/stumpwm-config.tar.gz:$(BUILDDIR)/stumpwm-config-$(CURRENT).tar.gz
 	ln -s stumpwm-config-$(CURRENT).tar.gz stumpwm-config.tar.gz 
 	mv stumpwm-config.tar.gz $@
 
-docs/build/dirhtml/:
-	make -C docs/ dirhtml
-
 $(BUILDDIR)/stumpwm-config-$(CURRENT).tar.gz:
 	make -C stumpwm/ package
 
@@ -25,11 +22,8 @@ $(BUILDDIR)/emacs-config-$(CURRENT).tar.gz:
 
 all: $(BUILDDIR)/stumpwm-config.tar.gz $(BUILDDIR)/emacs-config.tar.gz docs/build/dirhtml/
 
-docs:docs/build/dirhtml/
-
 push:
-	rsync -azrc build/*.tar.gz download.cyborginstitute.net:/srv/www/cyborginstitute/public/download/
-	rsync -azrc emacs/docs/build/dirhtml/ cyborginstitute.net:/srv/www/cyborginstitute/public/projects/stack/
+	rsync -azrc build/*.tar.gz institute@download.cyborginstitute.net:~/public/download/
 
 clean:
 	rm -rf docs/build/dirhtml/
