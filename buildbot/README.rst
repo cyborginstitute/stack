@@ -18,24 +18,19 @@ mirrors the README.
 Use
 ---
 
-.. note::
-   
-   The creation of the ``makefile`` in this repository has supplanted
-   most of this document. Run ``make help`` for more information. 
-
-1. Make a directory for your all buildbot files. Such as: :: 
+1. Make a directory for your all buildbot files. Such as: ::
 
       mkdir ~/buildbot
-   
+
 2. Make a sub-directory for all "build master" configuration. This is
    where the primary logic and code for your build bot config
    lives. For example: ::
-   
+
       mkdir ~/buildbot/master
-      
+
 3. Copy this directory into the ``~/buildbot/master/``
-   directory. Modify the following as needed: :: 
-   
+   directory. Modify the following as needed: ::
+
       mv ~/downloads/buildbotcfg ~/buildbot/master/config
 
 4. Create a symbolic link to make everything work as needed: ::
@@ -54,11 +49,11 @@ Use
    developing your own build system.
 
    You should make a practice of storing changes to the
-   ``~/buildbot/master/config`` files in a revision control system. 
-   
+   ``~/buildbot/master/config`` files in a revision control system.
+
 7. Start the buildbot in the ``~/buildbot/master/`` directory: ::
 
-      buildbot start 
+      buildbot start
 
 Rejoice. You have a buildbot. Also familiarize yourself with the
 `Buildbot`_ documentation for more information about setting up your
