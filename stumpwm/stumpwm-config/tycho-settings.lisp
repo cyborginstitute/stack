@@ -7,10 +7,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (load-module "tycho-system")
+;; (load-module "mpd")
 (load-module "tycho-keybindings")
 (load-module "tycho-windowing")
 ;; (load-module "battery-portable")
-;; (load-module "mpd")
 
 ; (load-module "mem")
 ; (load-module "notifications")

@@ -2,22 +2,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; It makes the emacs-slime go.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (setf stumpwm:*top-level-error-action* :abort)
-;; (load "/usr/share/emacs/site-lisp/slime/swank-loader.lisp")
-;; (swank-loader:init)
-;; (defcommand swank () ()
-;;             (setf stumpwm:*top-level-error-action* :break)
-;;             (swank:create-server :port 4005
-;;                                  :style swank:*communication-style*
-;;                                  :dont-close t)
-;;             (echo-string (current-screen) "Starting swank. Hack Aaway"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;; Toggling and Enabling the Mouse
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -32,6 +16,7 @@
 
 (defcommand firefox ()() (run-or-raise "firefox" '(:class "Firefox")))
 (defcommand dmenu ()() (run-shell-command "dmenu_run -nb '#000000' -nf '#ffffff'"))
+(defcommand dmpc ()() (run-shell-command "dmpc"))
 (defcommand dmenu-work ()() (run-shell-command "dmenu-work"))
 (defcommand dmenu-tychoish ()() (run-shell-command "dmenu-tychoish"))
 (defcommand dmenu-stl ()() (run-shell-command "dmenu-stl"))

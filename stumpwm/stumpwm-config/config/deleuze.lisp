@@ -66,4 +66,4 @@
   (restore-from-file "~/stumpwm/layout/group-thirds")
   (place-existing-windows))
 
-(run-commands "restore-desktop-laptop" "gselect 1")
+(run-commands "gselect 1" "grename cyborg")

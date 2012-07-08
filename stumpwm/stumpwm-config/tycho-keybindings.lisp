@@ -10,7 +10,6 @@
 ;; Insertions into top level bindings.
 ;;
 
-(define-key *top-map* (kbd "F12") "toggle-mouse")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec amixer -q set Master 5- unmute")
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec amixer -q set Master 5+ unmute")
 (define-key *top-map* (kbd "XF86AudioMute") "exec amixer -q sset Master toggle")
@@ -152,6 +151,7 @@
     (define-key m (kbd "m")     "volume-toggle")
     m))
 
+(define-key *mpd-map* (kbd "d") "dmpc")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -168,5 +168,3 @@
 (define-key *window-map* (kbd "C-d") '*dump-layout-map*)
 (define-key *window-map* (kbd "d") '*dump-layout-map*)
 (define-key *root-map* (kbd "v") '*volume-map*)
-
-
