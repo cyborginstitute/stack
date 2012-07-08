@@ -1,0 +1,7 @@
+#name : tychoish wiki header
+#contributor: Sam Kleinman <garen@tychoish.com>
+# --
+[[!meta title="$1"]]
+[[!tag $2]]
+
+$0

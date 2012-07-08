@@ -1,0 +1,16 @@
+#name : tychoish and cyborg institute link post template
+#contributor : tychoish <garen@tychoish.com>
+#---
+- [${1:Link Text}](${2:URL}) - $3
+
+- [${4:Link Text}](${5:URL}) - $6
+
+- [${7:Link Text}](${8:URL}) - $9
+
+- [${10:Link Text}](${11:URL}) - $12
+
+- [${13:Link Text}](${14:URL}) - $15
+
+---
+
+$0

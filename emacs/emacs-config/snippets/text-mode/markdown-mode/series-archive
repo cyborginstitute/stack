@@ -1,0 +1,14 @@
+---
+layout: interior
+title: tychoish > series archive > ${1:Page Title}
+---
+
+# Series Archive: ${2:Body Title}
+
+${3:Description}
+
+## Posts in This Series
+
+- [$4](http://www.tychoish.com/${5:Slug})
+- [$6](http://www.tychoish.com/${7:Slug})
+- $0

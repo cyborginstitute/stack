@@ -1,0 +1,64 @@
+Hello,
+
+Here's the documentation that I'm working from regarding the digest 
+list functions. I hope it's helpful, but if you need more help I can
+probably dig something else up.  
+
+There are a couple of ways to change settings for your subscriptions. A
+fairly easy way for most, since it doesn't require remembering Majordomo
+commands and allows you to manage multiple subscriptions quickly, is to
+create a sign-in at http://groups.queernet.org, where you can make changes
+to your subscriptions using a visual interface. There is also a good help
+section that explains how to use the majordomo e-mail interface. This is
+accomplished by sending e-mail commands to majordomo@queernet.org.
+
+This is the help section on changing to digest mode (in this case,
+"LISTNAME" would be changed to "glb-knit"):
+
+Receiving Messages in a Digest:
+
+A mailing list can be configured to bundle sets of posted messages
+together into a collection called a "digest."  Each mailing list
+can have several digests configured.  The most basic way to change
+your delivery class to receive a digest is to use the following
+command (substitute the name of a mailing list for LISTNAME):
+
+  set LISTNAME digest
+
+Three digest formats are available for every digest:  MIME, text, and
+index.  MIME digests contain every part of every message, including any
+attachments; this is the most common format.  Text digests include only
+plain text message parts.  Index digests display the subject line
+and other information about each message, but the message contents
+are omitted.
+
+To choose a new digest format, add its name after the word "digest"
+in the set command, for example:
+
+  set LISTNAME digest-mime
+
+Each mailing list can have several digests.  To see a description
+of the digests that are available for a particular mailing list,
+use the following command:
+
+  lists-full LISTNAME
+
+As an example, if a list has three digests (daily, weekly, biweekly),
+you can include their names in the set command, for example:
+
+  set LISTNAME digest-daily-index
+  set LISTNAME digest-weekly
+  set LISTNAME digest-biweekly-mime
+
+Cheers, 
+
+sam 
+
+(glb-knit administrator)
+
+-------
+tycho(ish) @
+garen@tychoish.com
+http://www.tychoish.com/
+http://www.criticalfutures.com/
+"don't get it right, get it written" -- james thurber

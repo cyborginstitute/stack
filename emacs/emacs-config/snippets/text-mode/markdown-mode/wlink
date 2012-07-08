@@ -1,0 +1,4 @@
+#name : Tychoish Wiki Link 
+#contributor: tycho garen <garen@tychoish.com> 
+# --
+[${1:Link Text}](http://tychoish.com/${2:URL}) $0

@@ -1,0 +1,15 @@
+(provide 'tycho-cal)
+
+(require 'icalendar)
+(require 'google-calendar)
+
+(setq google-calendar-user "tychoish")
+(setq google-calendar-code-directory "~/emacs/google-emacs/")
+(setq google-calendar-directory "~/.emacs.d/")
+(setq google-calendar-url "http://www.google.com/calendar/ical/tychoish%40gmail.com/private-4f49cfe9c2cb07c86ceac61f616dc910/basic.ics")
+(setq google-calendar-auto-update t )
+(google-calendar-download) 
+(shell-command "sed -ri 's/^\s+Status:.*$//' ~/org/diary; echo diary cleaned")
+(define-key calendar-mode-map (kbd "C-c C-g d") 'google-calendar-download)
+(define-key calendar-mode-map (kbd "C-c C-g q") 'google-calendar-quick-add-event)
+(define-key calendar-mode-map (kbd "C-c C-g a") 'google-calendar-add-event)
