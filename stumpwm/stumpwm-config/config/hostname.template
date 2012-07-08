@@ -1,0 +1,91 @@
+(in-package :stumpwm)
+
+(set-contrib-dir "~/stumpwm")
+
+(load-module "tycho-settings")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; It makes the emacs-slime go.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setf stumpwm:*top-level-error-action* :abort)
+
+;; Startup Initialization
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Arendt Layout Commands
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcommand dump-desktop-home ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-home")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-home.wplace"))
+(defcommand dump-desktop-laptop ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-laptop")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-laptop.wplace"))
+(defcommand dump-desktop-office ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-office")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-office.wplace"))
+
+(defcommand dump-desktop-home-alt ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-home-alt")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-home-alt.wplace"))
+(defcommand dump-desktop-dual-alt ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-dual-alt")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-dual-alt.wplace"))
+(defcommand dump-desktop-laptop-alt ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-laptop-alt")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-laptop-alt.wplace"))
+(defcommand dump-desktop-office-alt ()()
+  (dump-desktop-to-file "~/stumpwm/layout/HOSTNAME-office-alt")
+  (dump-window-placement-rules "~/stumpwm/layout/HOSTNAME-office-alt.wplace"))
+
+(defcommand restore-desktop-home ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-home")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-home.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-laptop ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-laptop")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-laptop.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-office ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-office")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-office.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-dual ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-dual")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-dual.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+
+(defcommand restore-desktop-dual-home-alt ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-home-alt")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-home-alt.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-dual-dual-alt ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-daul-alt")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-dual-alt.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-laptop-alt ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-laptop-alt")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-laptop-alt.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-desktop-office-alt ()()
+  (restore-from-file "~/stumpwm/layout/HOSTNAME-office-alt")
+  (restore-window-placement-rules "~/stumpwm/layout/HOSTNAME-office-alt.wplace")
+  (run-commands "fselect 1" "place-existing-windows"))
+
+(defcommand restore-HOSTNAME-base ()()
+  (restore-from-file "~/stumpwm/layout/group-HOSTNAME-base")
+  (run-commands "fselect 1" "place-existing-windows"))
+(defcommand restore-thirds ()()
+  (restore-from-file "~/stumpwm/layout/group-thirds")
+  (run-commands "fselect 1" "place-existing-windows"))
+
+;; (run-commands "gselect 1" "grename cyborg" "restore-desktop-laptop" "gselect 1" "fselect 1")
+
+
+ ;; TODO once you have a default desktop layout that you want to us
+ ;; saved, amend uncomment the following line:
