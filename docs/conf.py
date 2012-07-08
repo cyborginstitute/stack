@@ -51,7 +51,7 @@ html_show_copyright = True
 
 htmlhelp_basename = 'cyborg-institute'
 
-git_name = 'cyborg-admin'
+git_name = 'stack'
 html_theme_options = { 'project': git_name }
 
 # -- Options for LaTeX output --------------------------------------------------
