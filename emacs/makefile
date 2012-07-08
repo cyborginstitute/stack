@@ -30,7 +30,9 @@ help:
 #
 ######################################################################
 
-import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-template.el $(EMACSDIR)/config/hostname.template $(SNIPPETS)
+.PHONY:$(EMACSDIR)/tycho-instapaper-template.el $(EMACSDIR)/tycho-mail-setup-template.el
+
+import:$(EMACSDIR) 
 	for i in `find $(EMACSDIR) -name "*.el"`; do \
 		sed -i -r -e "s@/home/tychoish@~@g" \
 			-e "s@assemblage@wiki@g" -e "s@~/garen/@~/@g" \
@@ -40,8 +42,9 @@ import:$(EMACSDIR) $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup-templat
 	rm -rf $(EMACSDIR)/archive $(EMACSDIR)/config/archive $(EMACSDIR)/backup/* $(EMACSDIR)/bookmarks/* $(EMACSDIR)/helm/.git*
 	rm -rf $(EMACSDIR)/pylookup/python*-html $(EMACSDIR)/pylookup/pylookup.db $(EMACSDIR)/pylookup/*.zip $(EMACSDIR)/pylookup/.git*
 	rm -rf $(SNIPPETS)/markdown-mode/{linode*,rhizome*,tychoish*,wiki-sig} $(SNIPPETS)/{*gpl*,ciwp*} $(SNIPPETS)/rst-mode/
-
-	rm -rf $(EMACSDIR)/*.elc
+	rm -rf $(EMACSDIR)/*.elc $(EMACSDIR)/helm/*.elc $(EMACSDIR)/muse/*.elc $(EMACSDIR)/w3m/*.elc
+	rm -rf $(EMACSDIR)/tycho-mail-setup.el $(EMACSDIR)/tycho-instapaper.el 
+	make $(EMACSDIR)/work-deft.el $(EMACSDIR)/tycho-mail-setup.el $(EMACSDIR)/tycho-instapaper.el $(EMACSDIR)/config/hostname.template $(SNIPPETS)
 
 $(EMACSDIR):$(SOURCE_EMACS_CONFIG)
 	mkdir -p $@/
@@ -52,14 +55,20 @@ $(EMACSDIR)/config/arendt.el:$(EMACSDIR)
 $(EMACSDIR)/xgen-deft.el:$(EMACSDIR)
 
 $(EMACSDIR)/work-deft.el:$(EMACSDIR)/xgen-deft.el
-	-mv $< $@
-$(EMACSDIR)/tycho-mail-setup-template.el:$(EMACSDIR)/tycho-mail-setup.el
 	-mv -f $< $@
+$(EMACSDIR)/tycho-instapaper.el:$(EMACSDIR)/tycho-instapaper-template.el
+	mv $< $@
+	rm -f $<
+$(EMACSDIR)/tycho-instapaper-template.el:$(EMACSDIR)
+$(EMACSDIR)/tycho-mail-setup-template.el:$(EMACSDIR)
+$(EMACSDIR)/tycho-mail-setup.el:$(EMACSDIR)/tycho-mail-setup-template.el
+	mv $< $@
+	rm -f $<
 $(EMACSDIR)/config/hostname.template:$(EMACSDIR)/config/arendt.el
 	cp $< $@
 	sed -i -r -e "s/(.*(w3m|tex|slime).*)/\;\; \1/" $@
 
-package:$(BUILDDIR)/$(EMACSDIR)/emacs $(BUILDDIR)/$(EMACSDIR)/makefile $(BUILDDIR)/$(EMACSDIR)-$(CURRENT).tar.gz
+package:$(SNIPPETS) $(BUILDDIR)/$(EMACSDIR)/emacs $(BUILDDIR)/$(EMACSDIR)/makefile $(BUILDDIR)/$(EMACSDIR)-$(CURRENT).tar.gz
 $(BUILDDIR)/$(EMACSDIR)/emacs:$(EMACSDIR)
 	mkdir -p $@
 	rsync -r -L -v --delete  $</ $@
