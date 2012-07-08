@@ -1,0 +1,65 @@
+==================================
+Cyborg Institute License Statement
+==================================
+
+This document outlines the terms the terms and approach to copyright
+licensing for Cyborg Institute projects. The Institute consists almost
+entirely of intellectual output (i.e. texts, software, code, and
+documentation,) constructed in the context of an open community
+exchange. This licensing statement serves to make explicit principals
+that lead to the licensing choices for Institute projects, as well as
+to provide a single source for the `cyborginstitute.org`_ site
+licensing statement.
+
+.. _`cyborginstitute.org`: http://cyborginstitute.org/
+
+Principal
+---------
+
+The content and product of the Cyborg Institute are: 
+
+- a community effort, rooted in open conversations, methods, and
+  collaboration.
+
+- respectful and supportive of the freedom and rights of users and
+  contributors.
+  
+- intentionally sustainable and built to support itself and endure
+  into the future independent of specific leadership and technology.
+
+In light of these goals, institute projects tend to prefer licenses
+on the `copyleft <http://en.wikipedia.org/wiki/Copyleft>`_ spectrum,
+although some projects use more permissive terms when
+appropriate.
+
+Terms
+-----
+
+See relevant :file:`LICENSE` or :file:`COPYING` in the repository of
+the project for explicit terms, and licensing. For
+`cyborginstitute.org`_, and unless otherwise specified, you may
+receive all content under the terms of a license that, **both**:
+
+- allows you to copy, modify, and redistribute all content or software
+  as long as you also provide access to the source for your changes.
+
+- ensures that anyone that receives the content or software from you
+  will have the same rights as you had when you received the work. 
+
+These terms do not constitute license. Choose an acceptable license
+from the following list.
+
+Licenses 
+--------
+
+Suitable licenses may include: 
+
+- `GNU GPLv2 or Later <http://www.gnu.org/licenses/gpl-2.0.html>`_
+
+- `GPL.next <https://raw.github.com/richardfontana/GPL.next/master/GPL.next>`_
+
+- `AGPLv3 <http://www.gnu.org/licenses/agpl-3.0.html>`_
+
+- `CC By-Sa <http://creativecommons.org/licenses/by-sa/3.0/us/>`_
+
+- `GNU FDLv1.3 <http://www.gnu.org/copyleft/fdl.html>`_
