@@ -41,6 +41,6 @@ install: configure
 	ln -s ~/stumpwm/config/$(HOSTNAME).lisp ~/.stumpwmrc
 
 clean:
-	rm ~/.stumpwmrc
+	-mv -f ~/.stumpwmrc ~/stumpwmrc-`date +%s`
 	@echo "install your previous .stumpwmrc or restart for the default"
 	@echo "configuraiton"
