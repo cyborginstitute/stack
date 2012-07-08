@@ -4,8 +4,11 @@ Downloads
 
 Please see the `Cyborg Institute download resource
 <http://download.cyborginstitute.net>`_ for a full listing of
-available :doc:`stack` packages available for download, including
+available :doc:`stack <index>` packages available for download, including
 archived versions. 
+
+Packages
+--------
 
 All packages and related tooling are available via git, at all times:
 
@@ -16,3 +19,15 @@ In general:
 
 - The latest version of `stumpwm-config <http://download.cyborginstitute.net/stumpwm-config.tar.gz>`_
 - The latest version of `emacs-config <http://download.cyborginstitute.net/emacs-config.tar.gz>`_
+
+You can always view the directory listing at `downloads.cyborginstitute.net <http://download.cyborginstitute.net/>`_
+for a full list of archived packages. 
+
+Documentation
+-------------
+
+The latest version of this manual is available for download in ePub
+and PDF formats:
+
+- `Stack Manual, ePub </projects/stack/stack.epub>`_
+- `Stack Manual, PDF </projects/stack/stack.pdf>`_
