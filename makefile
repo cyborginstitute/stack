@@ -23,7 +23,7 @@ $(BUILDDIR)/emacs-config-$(CURRENT).tar.gz:
 all: $(BUILDDIR)/stumpwm-config.tar.gz $(BUILDDIR)/emacs-config.tar.gz docs/build/dirhtml/
 
 push:
-	rsync -azrc build/*.tar.gz institute@download.cyborginstitute.net:~/public/download/
+	rsync -azrc build/*.tar.gz institute@download.cyborginstitute.net:~/download/
 
 clean:
 	rm -rf docs/build/dirhtml/
